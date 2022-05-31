@@ -3,6 +3,7 @@ import { DISHES } from "../shared/dishes";
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
 import Header from "./HeaderComponent";
+import Footer from "./FooterComponent";
 
 class Main extends Component {
   constructor(props) {
@@ -23,8 +24,8 @@ class Main extends Component {
     const { dishes, selectedDish } = this.state;
     return (
       <div>
-        <Header />
         <div className="container">
+          <Header />
           <Menu
             dishes={dishes}
             onClick={(dishId) => this.onDishSelect(dishId)}
@@ -34,6 +35,7 @@ class Main extends Component {
               this.state.dishes.filter((dish) => dish.id === selectedDish)[0]
             }
           />
+          <Footer />
         </div>
       </div>
     );
