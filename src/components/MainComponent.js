@@ -1,7 +1,10 @@
 import { Component } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { DISHES } from "../shared/dishes";
+import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
+import Contact from "./ContactComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 
@@ -12,31 +15,34 @@ class Main extends Component {
       dishes: DISHES,
       selectedDish: null,
     };
+    this.toggleNav = this.toggleNav.bind(this);
   }
 
-  onDishSelect(dishId) {
+  toggleNav() {
     this.setState({
-      selectedDish: dishId,
+      isNavOpen: !this.state.isNavOpen,
     });
   }
 
   render() {
     const { dishes, selectedDish } = this.state;
+    const HomePage = () => {
+      return <Home />;
+    };
     return (
-      <div>
-        <div className="container">
-          <Header />
-          <Menu
-            dishes={dishes}
-            onClick={(dishId) => this.onDishSelect(dishId)}
+      <div className="container">
+        <Header />
+        <Switch>
+          <Route path="/home" component={HomePage} />
+          <Route
+            exact
+            path="/menu"
+            component={() => <Menu dishes={dishes} />}
           />
-          <DishDetail
-            dish={
-              this.state.dishes.filter((dish) => dish.id === selectedDish)[0]
-            }
-          />
-          <Footer />
-        </div>
+          <Route exact path="/contactus" />
+          <Redirect to="/home" />
+        </Switch>
+        <Footer />
       </div>
     );
   }
