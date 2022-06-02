@@ -1,6 +1,9 @@
 import { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { DISHES } from "../shared/dishes";
+import { COMMENTS } from "../shared/comments";
+import { LEADERS } from "../shared/leaders";
+import { PROMOTIONS } from "../shared/promotions";
 import Home from "./HomeComponent";
 import Menu from "./MenuComponent";
 import DishDetail from "./DishDetailComponent";
@@ -13,6 +16,9 @@ class Main extends Component {
     super(props);
     this.state = {
       dishes: DISHES,
+      comments: COMMENTS,
+      leaders: LEADERS,
+      promotions: PROMOTIONS,
       selectedDish: null,
     };
     this.toggleNav = this.toggleNav.bind(this);
@@ -25,9 +31,15 @@ class Main extends Component {
   }
 
   render() {
-    const { dishes, selectedDish } = this.state;
+    const { dishes, selectedDish, leaders, promotions } = this.state;
     const HomePage = () => {
-      return <Home />;
+      return (
+        <Home
+          dish={dishes.filter((dish) => dish.featured)[0]}
+          promotion={promotions.filter((promo) => promo.featured)[0]}
+          leader={leaders.filter((leader) => leader.featured)[0]}
+        />
+      );
     };
     return (
       <div className="container">
@@ -39,7 +51,7 @@ class Main extends Component {
             path="/menu"
             component={() => <Menu dishes={dishes} />}
           />
-          <Route exact path="/contactus" />
+          <Route exact path="/contactus" component={Contact} />
           <Redirect to="/home" />
         </Switch>
         <Footer />
