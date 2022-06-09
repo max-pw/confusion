@@ -10,6 +10,7 @@ import DishDetail from "./DishDetailComponent";
 import Contact from "./ContactComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import About from "./AboutComponent";
 
 class Main extends Component {
   constructor(props) {
@@ -41,6 +42,23 @@ class Main extends Component {
         />
       );
     };
+    const DishWithId = ({ match }) => {
+      return (
+        <DishDetail
+          dish={
+            this.state.dishes.filter(
+              (dish) => dish.id === parseInt(match.params.dishId, 10)
+            )[0]
+          }
+          comments={this.state.comments.filter(
+            (comment) => comment.dishId === parseInt(match.params.dishId, 10)
+          )}
+        />
+      );
+    };
+    const AboutUsPage = () => {
+      return <About leaders={leaders} />;
+    };
     return (
       <div className="container">
         <Header />
@@ -51,7 +69,9 @@ class Main extends Component {
             path="/menu"
             component={() => <Menu dishes={dishes} />}
           />
+          <Route path="/menu/:dishId" component={DishWithId} />
           <Route exact path="/contactus" component={Contact} />
+          <Route exact path="/aboutus" component={AboutUsPage} />
           <Redirect to="/home" />
         </Switch>
         <Footer />
