@@ -12,7 +12,7 @@ const RenderMenuItem = ({ dish }) => {
   return (
     <Card>
       <Link to={`/menu/${dish.id}`}>
-        <CardImg width="100%" object src={dish.image} alt={dish.name} />
+        <CardImg width="100%" src={dish.image} alt={dish.name} />
         <CardImgOverlay className="ml-5">
           <CardTitle heading>{dish.name}</CardTitle>
         </CardImgOverlay>
